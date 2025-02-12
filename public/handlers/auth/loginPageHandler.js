@@ -29,6 +29,7 @@ $(() => {
 
     $(document).on('click', '#login-btn', function (e) {
         e.preventDefault()
+
         const loginData = new FormData(document.getElementById('login-form'))
         hanldleAdminLogin(loginData)
     })
