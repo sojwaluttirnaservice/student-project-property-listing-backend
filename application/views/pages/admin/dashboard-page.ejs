@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Admin Dashboard</title>
+
+        <%- include('../partials/common-styles.ejs') %>
+
+        <link rel="stylesheet" href="/styles/admin/dashboard-styles.css" />
+
+        <!-- Common scripts -->
+        <%- include('../partials/common-scripts.ejs') %>
+    </head>
+
+    <body>
+        <%- include('../partials/navbar') %>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="dashboard-header">
+                <h1>Dashboard Overview</h1>
+            </div>
+
+            <!-- Dashboard Stats -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <i class="fas fa-building"></i>
+                    <div class="stat-info">
+                        <h3>Total Properties</h3>
+                        <p><%= propertyCount %></p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <div class="stat-info">
+                        <h3>Total Users</h3>
+                        <p><%= userCount %></p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <i class="fas fa-phone"></i>
+                    <div class="stat-info">
+                        <h3>Total Enquiries</h3>
+                        <p><%= properties.reduce((sum, prop) => sum + (prop.call_count || 0), 0) %></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Properties -->
+            <div class="recent-properties">
+                <h2>Recent Properties</h2>
+                <div class="property-grid">
+                    <% if (properties && properties.length > 0) { %>
+                        <% properties.forEach(property => { %>
+                            <div class="property-card">
+                                <div class="property-image">
+                                    <img 
+                                        src="<%= property.thumbnail_image ? `/uploads/thumbnail/${property.thumbnail_image}` : '/images/placeholder-property.jpg' %>" 
+                                        alt="<%= property.title %>"
+                                        onerror="this.src='/images/placeholder-property.jpg'"
+                                    />
+                                    <span class="property-status <%= property.status.toLowerCase() %>">
+                                        <%= property.status %>
+                                    </span>
+                                </div>
+                                <div class="property-info">
+                                    <h3><%= property.title %></h3>
+                                    <div class="property-location">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <%= property.city %>, <%= property.state %>
+                                    </div>
+                                    <div class="property-stats">
+                                        <span>
+                                            <i class="fas fa-phone"></i>
+                                            <%= property.call_count || 0 %> calls
+                                        </span>
+                                        <span>
+                                            <i class="fas fa-rupee-sign"></i>
+                                            <%= Number(property.price).toLocaleString('en-IN') %>
+                                        </span>
+                                    </div>
+                                    <a href="/property/p/<%= property.id %>" class="view-btn">View Details</a>
+                                </div>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <div class="no-properties">
+                            <i class="fas fa-home"></i>
+                            <p>No properties available</p>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+@layer components {
+  .container {
+    @apply mx-auto  px-3 sm:px-3 md:px-4  lg:px-6  xl:px-8;
+  }
+
+  /* Blue */
+
+  .my-text-blue-primary {
+    @apply text-[#41a9ff];
+  }
+  .my-bg-blue-primary {
+    @apply bg-[#41a9ff];
+  }
+  .my-border-blue-primary {
+    @apply border-[#41a9ff];
+  }
+
+
+  .my-bg-blue-primary-dark {
+    @apply bg-[#2787d6];
+  }
+
+  .my-text-blue-primary-dark {
+    @apply text-[#2787d6];
+  }
+
+  .my-border-blue-primary-dark {
+    @apply border-[#2787d6];
+  }
+  
+
+  /* Gray Dark primary*/
+
+  .my-text-gray-primary {
+    @apply text-[#333333];
+  }
+
+  .my-bg-gray-primary {
+    @apply bg-[#333333];
+  }
+
+  
+  /* Gray Dark  secondry*/
+
+  .my-text-gray-secondary {
+    @apply text-[#555555];
+  }
+
+  .my-bg-gray-secondary {
+    @apply bg-[#555555];
+  }
+
+  /* Gray dark orange*/
+
+  .my-text-orange-primary {
+    @apply text-[#fe610c];
+  }
+  .my-bg-orange-primary {
+    @apply bg-[#fe610c];
+  }
+
+  /* Transitions */
+
+  .my-transition-300 {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  .my-transition-200 {
+    @apply transition-all duration-200 ease-in-out;
+  }
+
+  .my-transition-100 i{
+    @apply transition-all duration-100 ease-in-out;
+  }
+
+  .error {
+    @apply text-red-500 text-xs;
+  }
+}

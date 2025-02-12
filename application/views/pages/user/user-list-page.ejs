@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Users List</title>
+    <%- include('../partials/common-styles.ejs') %>
+    <link rel="stylesheet" href="/styles/user/user-list-styles.css" />
+</head>
+<body>
+    <%- include('../partials/navbar.ejs') %>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Users List</h1>
+            <!-- <a href="/user/add" class="add-user-btn">
+                <i class="fas fa-plus"></i> Add New User
+            </a> -->
+        </div>
+
+        <div class="users-container">
+            <% if (users && users.length > 0) { %>
+                <div class="users-grid">
+                    <% users.forEach(user => { %>
+                        <div class="user-card">
+                            <div class="user-avatar">
+                                <i class="fas fa-user"></i>
+                                <span class="status-badge <%= user.status %>"></span>
+                            </div>
+                            <div class="user-info">
+                                <h3 class="user-name"><%= user.name %></h3>
+                                <p class="user-username">@<%= user.username %></p>
+                                <!-- <div class="user-contact">
+                                    <i class="fas fa-phone"></i>
+                                    <span><%= user.mobile %></span>
+                                </div> -->
+                                
+                            </div>
+                            <div class="user-actions">
+                                <!-- <button class="action-btn edit">
+                                    <i class="fas fa-edit"></i>
+                                </button> -->
+                                <!-- <button class="action-btn delete">
+                                    <i class="fas fa-trash"></i>
+                                </button> -->
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            <% } else { %>
+                <div class="no-users">
+                    <i class="fas fa-users"></i>
+                    <p>No users found</p>
+                    <a href="/user/add" class="add-user-btn">Add New User</a>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <%- include('../partials/common-scripts.ejs') %>
+</body>
+</html>
