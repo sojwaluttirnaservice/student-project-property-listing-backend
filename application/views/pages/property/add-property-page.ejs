@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Add Property</title>
+
+        <%- include('../partials/common-styles.ejs') %>
+
+        <link
+            rel="stylesheet"
+            href="/styles/property/add-property-styles.css"
+        />
+
+        <!-- Common scripts -->
+
+        <%- include('../partials/common-scripts.ejs') %>
+
+        <script
+            src="/handlers/property/addPropertyPageHandler.js"
+            defer
+            type="module"
+        ></script>
+    </head>
+    <body>
+        <%- include('../partials/navbar') %>
+
+        <div class="container">
+            <div class="form-wrapper">
+                <h2 class="form-title">Add New Property</h2>
+
+                <form
+                    id="propertyForm"
+                    class="property-form"
+                    enctype="multipart/form-data"
+                >
+                    <!-- Basic Information -->
+                    <div class="form-section">
+                        <h3>Basic Information</h3>
+
+                        <div class="form-group">
+                            <label for="title">Property Title</label>
+                            <input
+                                type="text"
+                                id="title"
+                                name="title"
+                                required
+                                placeholder="Enter property title"
+                            />
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="type">Property Type</label>
+                                <select id="type" name="type" required>
+                                    <option value="">Select Type</option>
+                                    <option value="Apartment">Apartment</option>
+                                    <option value="House">House</option>
+                                    <option value="Villa">Villa</option>
+                                    <option value="Plot">Plot</option>
+                                    <option value="Commercial">
+                                        Commercial
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="status">Status</label>
+                                <select id="status" name="status" required>
+                                    <option value="">Select Status</option>
+                                    <option value="For Sale">For Sale</option>
+                                    <option value="For Rent">For Rent</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location Details -->
+                    <div class="form-section">
+                        <h3>Location Details</h3>
+
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input
+                                type="text"
+                                id="address"
+                                name="address"
+                                required
+                                placeholder="Enter complete address"
+                            />
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input
+                                    type="text"
+                                    id="city"
+                                    name="city"
+                                    required
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="state">State</label>
+                                <input
+                                    type="text"
+                                    id="state"
+                                    name="state"
+                                    required
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="zipcode">Zipcode</label>
+                                <input
+                                    type="text"
+                                    id="zipcode"
+                                    name="zipcode"
+                                    required
+                                    pattern="[0-9]{6}"
+                                    maxlength="6"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Property Details -->
+                    <div class="form-section">
+                        <h3>Property Details</h3>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="price">Price (₹)</label>
+                                <input
+                                    type="number"
+                                    id="price"
+                                    name="price"
+                                    required
+                                    min="0"
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="area_sqft">Area (sq.ft)</label>
+                                <input
+                                    type="number"
+                                    id="area_sqft"
+                                    name="area_sqft"
+                                    required
+                                    min="0"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bedrooms">Bedrooms</label>
+                                <input
+                                    type="number"
+                                    id="bedrooms"
+                                    name="bedrooms"
+                                    min="0"
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bathrooms">Bathrooms</label>
+                                <input
+                                    type="number"
+                                    id="bathrooms"
+                                    name="bathrooms"
+                                    min="0"
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="parking_spaces"
+                                    >Parking Spaces</label
+                                >
+                                <input
+                                    type="number"
+                                    id="parking_spaces"
+                                    name="parking_spaces"
+                                    min="0"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="furnishing">Furnishing Status</label>
+                            <select id="furnishing" name="furnishing">
+                                <option value="">Select Furnishing</option>
+                                <option value="Unfurnished">Unfurnished</option>
+                                <option value="Semi-Furnished">
+                                    Semi-Furnished
+                                </option>
+                                <option value="Fully Furnished">
+                                    Fully Furnished
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Owner Information -->
+                    <div class="form-section">
+                        <h3>Owner Information</h3>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="owner_name">Owner Name</label>
+                                <input
+                                    type="text"
+                                    id="owner_name"
+                                    name="owner_name"
+                                    required
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="owner_contact"
+                                    >Contact Number</label
+                                >
+                                <input
+                                    type="tel"
+                                    id="owner_contact"
+                                    name="owner_contact"
+                                    required
+                                    pattern="[0-9]{10}"
+                                    maxlength="10"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input
+                                    type="checkbox"
+                                    id="rera_registered"
+                                    name="rera_registered"
+                                />
+                                RERA Registered
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Images -->
+                    <div class="form-section">
+                        <h3>Property Images</h3>
+
+                        <div class="form-group">
+                            <label for="thumbnail_image">Thumbnail Image</label>
+                            <input
+                                type="file"
+                                id="thumbnail_image"
+                                name="thumbnail_image"
+                                required
+                                accept="image/*"
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gallery_images"
+                                >Gallery Images(Max 4 Images)</label
+                            >
+                            <input
+                                type="file"
+                                id="gallery_images"
+                                name="gallery_images"
+                                multiple
+                                accept="image/*"
+                                onchange="if(this.files.length > 4){ alert('You can only select up to 4 images.'); this.value = ''; }"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Additional Information -->
+                    <div class="form-section">
+                        <h3>Additional Information</h3>
+
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea
+                                id="description"
+                                name="description"
+                                rows="4"
+                                placeholder="Enter property description"
+                            ></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Amenities</label>
+                            <div class="amenities-grid">
+                                <label class="checkbox-label">
+                                    <div class="checkbox-wrapper">
+                                        <input
+                                            type="checkbox"
+                                            name="amenities[]"
+                                            value="Lift"
+                                        />
+                                        <span>Lift</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-label">
+                                    <div class="checkbox-wrapper">
+                                        <input
+                                            type="checkbox"
+                                            name="amenities[]"
+                                            value="Security"
+                                        />
+                                        <span>Security</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-label">
+                                    <div class="checkbox-wrapper">
+                                        <input
+                                            type="checkbox"
+                                            name="amenities[]"
+                                            value="Garden"
+                                        />
+                                        <span>Garden</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-label">
+                                    <div class="checkbox-wrapper">
+                                        <input
+                                            type="checkbox"
+                                            name="amenities[]"
+                                            value="Gym"
+                                        />
+                                        <span>Gym</span>
+                                    </div>
+                                </label>
+                                <!-- Add more amenities as needed -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button
+                            type="submit"
+                            id="submit-btn"
+                            class="submit-btn"
+                        >
+                            Add Property
+                        </button>
+                        <button type="reset" class="reset-btn">
+                            Reset Form
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

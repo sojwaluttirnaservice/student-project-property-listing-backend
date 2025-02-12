@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Properties List</title>
+
+        <%- include('../partials/common-styles.ejs') %>
+        
+        <link rel="stylesheet" href="/styles/property/property-list-styles.css" />
+    </head>
+    <body>
+        <%- include('../partials/navbar.ejs') %>
+
+        <div class="container">
+            <div class="page-header">
+                <h1>Available Properties</h1>
+                <a href="/property/add" class="add-property-btn">Add New Property</a>
+            </div>
+
+            <div class="property-grid">
+                <% if (properties && properties.length > 0) { %>
+                    <% properties.forEach(property => { %>
+                        <div class="property-card">
+                            <div class="property-image">
+                                <img 
+                                    src="<%= property.thumbnail_image ? `${thumbnailPath}/${property.thumbnail_image}` : '/images/placeholder-property.jpg' %>" 
+                                    alt="<%= property.title %>"
+                                    onerror="this.src='/images/placeholder-property.jpg'"
+                                />
+
+                                <span class="property-status <%= property.status.toLowerCase().replace(' ', '-') %>">
+                                    <%= property.status %>
+                                </span>
+                            </div>
+                            
+                            <div class="property-info">
+                                <h3 class="property-title"><%= property.title %></h3>
+                                
+                                <div class="property-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <%= property.city %>, <%= property.state %>
+                                </div>
+                                
+                                <div class="property-details">
+                                    <span>
+                                        <i class="fas fa-bed"></i>
+                                        <%= property.bedrooms %> Beds
+                                    </span>
+                                    <span>
+                                        <i class="fas fa-bath"></i>
+                                        <%= property.bathrooms %> Baths
+                                    </span>
+                                    <span>
+                                        <i class="fas fa-vector-square"></i>
+                                        <%= property.area_sqft %> sqft
+                                    </span>
+                                </div>
+                                
+                                <div class="property-price">
+                                    ₹<%= Number(property.price).toLocaleString('en-IN') %>
+                                </div>
+
+                                <div class="property-footer">
+                                    <span class="property-type">
+                                        <i class="fas fa-home"></i>
+                                        <%= property.type %>
+                                    </span>
+                                    <a href="/property/p/<%= property.id %>" class="view-details-btn">
+                                        View Details
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <div class="no-properties">
+                        <i class="fas fa-home"></i>
+                        <p>No properties available at the moment.</p>
+                        <a href="/property/add" class="add-property-btn">Add New Property</a>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+
+        <%- include('../partials/common-scripts.ejs') %>
+    </body>
+</html>

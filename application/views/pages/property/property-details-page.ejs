@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= property.title %></title>
+    
+    <!-- Add Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <%- include('../partials/common-styles.ejs') %>
+    <link rel="stylesheet" href="/styles/property/property-details-styles.css" />
+</head>
+<body>
+    <%- include('../partials/navbar.ejs') %>
+
+    <div class="container">
+        <div class="property-header">
+            <div class="header-content">
+                <h1 class="property-title"><%= property.title %></h1>
+                <div class="property-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <%= property.address %>, <%= property.city %>, <%= property.state %> - <%= property.zipcode %>
+                </div>
+                <div class="property-price">₹<%= Number(property.price).toLocaleString('en-IN') %></div>
+            </div>
+            <div class="header-actions">
+                <!-- <button class="share-btn">
+                    <i class="fas fa-share-alt"></i> Share
+                </button> -->
+                <a href="/property" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to List
+                </a>
+            </div>
+        </div>
+
+        <div class="property-content">
+            <div class="gallery-section">
+                <div class="main-image">
+                    <img 
+                        src="<%= property.thumbnail_image ? `${thumbnailPath}/${property.thumbnail_image}` : '/images/placeholder-property.jpg' %>" 
+                        alt="<%= property.title %>"
+                        onerror="this.src='/images/placeholder-property.jpg'"
+                    />
+                </div>
+
+                <!-- Swiper -->
+                <div class="swiper gallery-swiper">
+                    <div class="swiper-wrapper">
+                        <% 
+                        let galleryImages = [];
+                        if (property.gallery_images) {
+                            galleryImages = Array.isArray(property.gallery_images) 
+                                ? property.gallery_images 
+                                : JSON.parse(property.gallery_images);
+                        }
+                        
+                        // If no images, use placeholders
+                        if (galleryImages.length === 0) {
+                            galleryImages = [
+                                'placeholder-property.jpg',
+                                'placeholder-property.jpg',
+                                'placeholder-property.jpg',
+                                'placeholder-property.jpg',
+                            ];
+                        }
+                        
+                        galleryImages.forEach(image => { %>
+                            <div class="swiper-slide">
+                                <div class="gallery-item">
+                                    <img 
+                                        src="<%= image.includes('placeholder') ? `/images/${image}` : `${galleryPath}/${image}` %>" 
+                                        alt="Property Gallery Image"
+                                        onerror="this.src='/images/placeholder-property.jpg'"
+                                    />
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>
+                    <!-- Add Navigation -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+
+            <div class="details-grid">
+                <div class="main-details">
+                    <div class="detail-section">
+                        <h2>Property Details</h2>
+                        <div class="details-list">
+                            <div class="detail-item">
+                                <i class="fas fa-home"></i>
+                                <span>Type:</span>
+                                <%= property.type %>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-tag"></i>
+                                <span>Status:</span>
+                                <%= property.status %>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-vector-square"></i>
+                                <span>Area:</span>
+                                <%= property.area_sqft %> sqft
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-bed"></i>
+                                <span>Bedrooms:</span>
+                                <%= property.bedrooms %>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-bath"></i>
+                                <span>Bathrooms:</span>
+                                <%= property.bathrooms %>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-car"></i>
+                                <span>Parking:</span>
+                                <%= property.parking_spaces %> spaces
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-couch"></i>
+                                <span>Furnishing:</span>
+                                <%= property.furnishing %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h2>Description</h2>
+                        <p class="description"><%= property.description %></p>
+                    </div>
+
+                    <div class="detail-section">
+                        <h2>Amenities</h2>
+                        <div class="amenities-grid">
+                            <% if (property.amenities) { 
+                                let amenitiesList = Array.isArray(property.amenities) 
+                                    ? property.amenities 
+                                    : property.amenities.split(',');
+                            %>
+                                <% amenitiesList.forEach(amenity => { %>
+                                    <div class="amenity-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <%= amenity.trim() %>
+                                    </div>
+                                <% }); %>
+                            <% } %>
+                        </div>
+                        
+
+                    </div>
+                </div>
+
+                <div class="contact-section">
+                    <div class="contact-card">
+                        <h3>Contact Owner</h3>
+                        <div class="owner-details">
+                            <div class="owner-info">
+                                <i class="fas fa-user"></i>
+                                <%= property.owner_name %>
+                            </div>
+                            <div class="owner-info">
+                                <i class="fas fa-phone"></i>
+                                <%= property.owner_contact %> 
+                            </div>
+                        </div>
+                        <% if (property.rera_registered) { %>
+                            <div class="rera-badge">
+                                <i class="fas fa-certificate"></i>
+                                RERA Registered
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+    <!-- Initialize Swiper -->
+    <script>
+        const swiper = new Swiper('.gallery-swiper', {
+            slidesPerView: 2,
+            spaceBetween: 20,
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            // Responsive breakpoints
+            breakpoints: {
+                // when window width is >= 320px
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 10
+                },
+                // when window width is >= 480px
+                480: {
+                    slidesPerView: 2,
+                    spaceBetween: 15
+                },
+                // when window width is >= 768px
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 20
+                }
+            }
+        });
+    </script>
+
+    <%- include('../partials/common-scripts.ejs') %>
+</body>
+</html>
