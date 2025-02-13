@@ -123,6 +123,32 @@ const propertyController = {
         let _result = await propertyModel.delete(propertyId)
 
         return sendResponse(res, 200, true, 'Property deleted successfully')
+    }),
+
+
+    getPropertyById: asyncHandler(async (req, res) => {
+
+        const { id: propertyId } = req.params;
+
+        let _property = await propertyModel.get(propertyId)
+
+        return sendResponse(res, 200, true, "Property fetched successfully", { property: _property[0][0] || {}, thumbnailPath: paths.thumbnail.renderPath, galleryPath: paths.gallery.renderPath })
+    }),
+
+    list: asyncHandler(async (req, res) => {
+        let _properties = await propertyModel.listByCallStats()
+        return sendResponse(res, 200, true, "Properties fetched successfully", { properties: _properties[0] || [], thumbnailPath: paths.thumbnail.renderPath, galleryPath: paths.gallery.renderPath })
+    }),
+
+
+    searchByQuery: asyncHandler(async (req, res) => {
+        let { q: searchQuery } = req.query;
+
+        let _propeties = await propertyModel.searchByQuery(searchQuery, 7);
+
+        console.log(_propeties[0])
+
+        return sendResponse(res, 200, true, "Properties fetched successfully", { properties: _propeties[0] || [] })
     })
 }
 

@@ -6,6 +6,9 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const upload = require('express-fileupload');
 
+
+const cors = require('cors');
+
 const logger = require('morgan');
 
 const indexRouter = require('./routes/indexRouter');
@@ -25,6 +28,16 @@ app.use(session({
   // }
 }));
 
+app.use(cors())
+
+// app.use(cors(
+//   {
+//   //   origin: process.env.FRONTEND_URL,
+//     // credentials: true,
+//   //   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//   //   allowedHeaders: ['Content-Type', 'Authorization']
+//   }
+// ));
 
 app.use(upload());
 
@@ -44,6 +57,8 @@ app.use(express.json({ limit: '1024mb' }));
 app.use(express.urlencoded({ extended: true, limit: '1024mb' }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+// OR if your uploads are directly in public folder:
+// app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
 
 

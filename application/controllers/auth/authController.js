@@ -95,6 +95,7 @@ const authController = {
 
     login: asyncHandler(async (req, res) => {
         const { role } = req.body
+        console.log(role)
 
         if (role == 'admin') {
             let { username, password, } = req.body
@@ -144,6 +145,10 @@ const authController = {
 
             let _user = _userResult[0][0]
 
+
+            console.log(email, password)
+            console.log(_user)
+
             if (_user.password != password) {
                 return sendError(res, 400, false, 'Invalid username or  password')
             }
@@ -165,10 +170,14 @@ const authController = {
                 SECRET_KEY,
 
                 // Exprire the token after 24 hours of login
-                { algorithm: 'RS256', expiresIn: 24 * 60 * 60 }
+                { expiresIn: 24 * 60 * 60 }
             )
 
-            return sendResponse(res, 200, true, 'Login successful', { token })
+            // console.log(token)
+
+            let { password: pass, ...userWithoutPassword } = _user
+
+            return sendResponse(res, 200, true, 'Login successful', { token, user: userWithoutPassword })
         }
     }),
 
