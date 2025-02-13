@@ -1,3 +1,5 @@
+import toast from "../toast-alerts-handler.js"
+
 $(() => {
 
     function resetForm() {
@@ -42,18 +44,18 @@ $(() => {
             const { success, message } = await response.json();
 
             if (success) {
-                alert(message);
+                toast.success(message)
                 resetForm()
                 // Redirect to properties list page after successful addition
                 window.location.href = '/property';
             } else {
-                alert(message);
+                toast.warning(message);
                 // Re-enable button and restore original text if there's an error
                 submitBtn.prop('disabled', false).text(originalText);
             }
         } catch (error) {
             console.error('Error adding property:', error);
-            alert('Failed to add property. Please try again.');
+            toast.error('Failed to add property. Please try again.');
             // Re-enable button and restore original text on error
             $('#submit-btn').prop('disabled', false).text('Add Property');
         }
