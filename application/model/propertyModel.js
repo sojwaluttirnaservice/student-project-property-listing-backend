@@ -65,14 +65,17 @@ const propertyModel = {
         return db.query(query, [values]);
     },
 
-    search: (searchQuery) => {
+    searchByQuery: (searchQuery, limit = null) => {
+
+
         let q = `SELECT * FROM property 
                  WHERE title LIKE ? 
                  OR address LIKE ? 
                  OR city LIKE ? 
                  OR state LIKE ? 
                  OR country LIKE ? 
-                 OR zipcode LIKE ?`;
+                 OR zipcode LIKE ?
+                 ${limit ? `LIMIT ${limit}` : ''}`;
 
         let searchPattern = `%${searchQuery}%`; // Add wildcard %
 

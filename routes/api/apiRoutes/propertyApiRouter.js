@@ -11,6 +11,12 @@ const propertyApiRouter = getRouter()
 
 propertyApiRouter.post('/', checkAdminAuth, propertyController.add)
 
-
 propertyApiRouter.delete('/', checkAdminAuth, propertyController.delete)
+
+propertyApiRouter.get('/', propertyController.list)
+
+propertyApiRouter.get('/p/:id', propertyController.getPropertyById)
+
+propertyApiRouter.get('/search', propertyController.searchByQuery)
+
 module.exports = propertyApiRouter;
