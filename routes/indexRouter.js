@@ -2,7 +2,7 @@ const express = require('express');
 
 const asyncHandler = require('../application/utlis/asyncHandler');
 const indexController = require('../application/controllers/indexController');
-const { checkAuth } = require('../application/controllers/auth/authController');
+const { checkAuth, checkAdminAuth } = require('../application/controllers/auth/authController');
 const apiRouter = require('./api/apiRouter');
 const propertyRouter = require('./views/propertyRouter');
 const userRouter = require('./views/userRouter');

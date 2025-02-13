@@ -4,17 +4,12 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Admin Login</title>
-        <!-- <link rel="stylesheet" href="/stylesheets/main.css" /> -->
+        <%- include('../pages/partials/common-styles.ejs') %>
 
         <link rel="stylesheet" href="/styles/auth/login-page.css" />
 
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-        ></script>
-
+        <!-- Common scripts -->
+        <%- include('../pages/partials/common-scripts.ejs') %>
         <script
             src="/handlers/auth/loginPageHandler.js"
             type="module"
@@ -48,7 +43,8 @@
                             required
                             placeholder="Enter your password"
                         />
-                        <input type="text" name="role" value="admin" hidden>
+                        
+                        <input type="text" name="role" value="admin" hidden />
                     </div>
 
                     <button type="button" id="login-btn" class="login-btn">

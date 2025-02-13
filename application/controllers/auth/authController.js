@@ -19,12 +19,14 @@ const authController = {
                 next()
                 return;
             }
-            if (!session?.user || !session?.user || (!session?.user?.role != 'admin' && !session?.user?.role == 'user')) {
+
+            const isLoggedIn = session?.user && (session?.user?.role == 'admin' || session?.user?.role == 'user')
+
+            if (!isLoggedIn) {
                 renderPage(res, 'auth/login-page.ejs')
                 return;
             }
 
-            // console.log("Session was created")
             next()
         } catch (err) {
             return sendError(res, 500, false, 'Internal Server Error', null, err)
@@ -46,7 +48,10 @@ const authController = {
                 return;
             }
 
-            if (!session?.user || !session?.user?.role != 'admin') {
+            // There should be a session and role should be an admin
+            let isAdminLoggedIn = session?.user && session.user.role == 'admin'
+
+            if (!isAdminLoggedIn) {
                 renderPage(res, 'auth/login-page.ejs')
                 return;
             }
@@ -72,6 +77,7 @@ const authController = {
 
 
             // RETURNS BOOLEAN TYPE
+            // if decoded ist true, valid token else invalid token
             let decoded = jwt.verify(token, SECRET_KEY)
 
             if (!decoded) {
@@ -89,7 +95,6 @@ const authController = {
 
     login: asyncHandler(async (req, res) => {
         const { role } = req.body
-
 
         if (role == 'admin') {
             let { username, password, } = req.body
@@ -117,6 +122,8 @@ const authController = {
                 ...req.body,
                 role: 'admin'
             }
+
+            console.log(req.session);
 
             return sendResponse(res, 200, true, 'Login successful')
 
