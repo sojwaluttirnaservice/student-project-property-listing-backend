@@ -1,6 +1,6 @@
+import toast from "../toast-alerts-handler.js"
+
 $(() => {
-
-
 
     const hanldleAdminLogin = async (_loginData) => {
         try {
@@ -15,15 +15,16 @@ $(() => {
             const { success, message } = await _res.json()
 
             if (success) {
-                alert(message);
-                window.location.reload()
+                toast.success(message)
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000)
             } else {
-                alert(message)
+                toast.error(message)
             }
-
         } catch (err) {
             console.error(err)
-
+            toast.error("Error")
         }
     }
 
