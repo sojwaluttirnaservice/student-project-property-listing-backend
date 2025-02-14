@@ -142,13 +142,17 @@ const propertyController = {
 
 
     searchByQuery: asyncHandler(async (req, res) => {
-        let { q: searchQuery } = req.query;
 
-        let _propeties = await propertyModel.searchByQuery(searchQuery, 7);
-
-        console.log(_propeties[0])
-
-        return sendResponse(res, 200, true, "Properties fetched successfully", { properties: _propeties[0] || [] })
+        let searchData = req.query
+        let _properties = []
+        if (!searchData.multiple) {
+            _properties = await propertyModel.searchByQuery(searchData);
+        } else {
+            let { multiple, ...actualSearchData } = searchData
+            console.log(searchData)
+            _properties = await propertyModel.searchByParams(actualSearchData);
+        }
+        return sendResponse(res, 200, true, "Properties fetched successfully", { properties: _properties[0] || [] })
     })
 }
 

@@ -23,6 +23,12 @@ const userSchema = sequelize.define("user", {
         comment: "Email of the user"
     },
 
+    gender: {
+        type: Sequelize.ENUM('Male', 'Female', 'Other'),
+        allowNull: false,
+        comment: "Gender of the user"
+    },
+
     mobile: {
         type: Sequelize.STRING(15),
         allowNull: false,
@@ -30,7 +36,6 @@ const userSchema = sequelize.define("user", {
         length: 10,
         comment: "Mobile number of the user"
     },
-
 
     password: {
         type: Sequelize.STRING(20),

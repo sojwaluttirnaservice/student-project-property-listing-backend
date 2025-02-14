@@ -185,6 +185,26 @@ const authController = {
     logout: asyncHandler(async (req, res) => {
         req.session.destroy();
         return sendResponse(res, 200, true, 'Logout successful',)
+    }),
+
+    signup: asyncHandler(async (req, res) => {
+        let signUpData = req.body
+        let { email, password, name, mobile, gender } = signUpData
+
+        const _existingUsers = await userModel.getUserByEmail(email)
+
+        if (!email || !password || !name || !mobile || !gender) {
+            return sendError(res, 400, false, 'All fields are required')
+        }
+
+        if (_existingUsers[0].length) {
+            return sendResponse(res, 400, false, 'User already exists')
+        }
+
+
+        await userModel.create(signUpData)
+        
+        return sendResponse(res, 201, true, 'User created successfully')
     })
 }
 

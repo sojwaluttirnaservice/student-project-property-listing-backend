@@ -65,22 +65,40 @@ const propertyModel = {
         return db.query(query, [values]);
     },
 
-    searchByQuery: (searchQuery, limit = null) => {
+    searchByQuery: (searchData) => {
 
+        let { q: searchQuery, limit = 7, status } = searchData;
 
         let q = `SELECT * FROM property 
-                 WHERE title LIKE ? 
-                 OR address LIKE ? 
+                 WHERE 
+                 address LIKE ? 
                  OR city LIKE ? 
                  OR state LIKE ? 
                  OR country LIKE ? 
                  OR zipcode LIKE ?
+                 AND status = ?
                  ${limit ? `LIMIT ${limit}` : ''}`;
 
         let searchPattern = `%${searchQuery}%`; // Add wildcard %
 
-        return db.query(q, [searchPattern, searchPattern, searchPattern, searchPattern, searchPattern, searchPattern]);
+        return db.query(q, [searchPattern, searchPattern, searchPattern, searchPattern, searchPattern, searchPattern, status]);
     },
+
+
+    searchByParams: (searchData) => {
+        const searchParamsArray = [];
+        Object.entries(searchData).forEach(([key, value]) => {
+            searchParamsArray.push({ key, value })
+        })
+        let q = `SELECT * FROM property WHERE ${searchParamsArray
+            .map((paramName) => `${paramName.key} = ?`)
+            .join(' AND ')}`;
+
+        console.log(q)
+        let values = searchParamsArray.map((paramName) => paramName.value);
+        return db.query(q, values);
+    },
+
 
 
     count: () => {

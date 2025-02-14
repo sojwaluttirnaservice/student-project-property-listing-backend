@@ -10,9 +10,10 @@ const userModel = {
                     name, 
                     email, 
                     mobile, 
-                    username, 
+                   
                     password, 
-                    refreshToken
+                    refreshToken,
+                    gender
                 )
         VALUES (?)`
 
@@ -20,9 +21,10 @@ const userModel = {
             userData.name,
             userData.email || '',
             userData.mobile,
-            userData.username,
+            
             userData.password,
-            userData.refreshToken || ''
+            userData.refreshToken || '',
+            userData.gender
         ]
         return db.query(q, [insertArray])
     },
