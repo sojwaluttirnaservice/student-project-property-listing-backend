@@ -43,6 +43,15 @@ const propertyController = {
         let thumbnailFile;
         let thumbnailFileName;
         // Handle thumbnail image upload
+
+        if (!req?.files?.thumbnail_image) {
+            return sendResponse(res, 400, false, 'Thumbnail image is required');
+        }
+
+        if (!req?.files?.gallery_images) {
+            return sendResponse(res, 400, false, 'Gallery images are required');
+        }
+
         if (req.files && req.files.thumbnail_image) {
             // Validate thumbnail
             // Get the original file extension
@@ -74,9 +83,11 @@ const propertyController = {
 
                 if (!fileHandler.validateFileType(file)) {
                     throw new Error('Invalid gallery image file type');
+
                 }
                 if (!fileHandler.validateFileSize(file)) {
                     throw new Error('Gallery image file size exceeds limit');
+
                 }
             }
         }
