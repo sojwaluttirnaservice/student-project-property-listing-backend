@@ -43,7 +43,7 @@ const adminSchema = sequelize.define("admin", {
     }
 }, {
     timestamps: true,
-    comment: "Table storing all property listings information"
+    comment: "Table storing all the admin information"
 });
 
 module.exports = adminSchema;
