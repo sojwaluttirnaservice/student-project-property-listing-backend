@@ -58,6 +58,11 @@ const userModel = {
         const q = `SELECT * FROM user WHERE email = ?`
         return db.query(q, [email])
     },
+
+    updateProfile: (userId, name, email) => {
+        const q = `UPDATE user SET name = ?, email = ? WHERE id = ?`
+        return db.query(q, [name, email, userId])
+    },
 }
 
 

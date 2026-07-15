@@ -205,6 +205,34 @@ const authController = {
         await userModel.create(signUpData)
         
         return sendResponse(res, 201, true, 'User created successfully')
+    }),
+
+    updateProfile: asyncHandler(async (req, res) => {
+        const { userId, name, email } = req.body;
+
+        if (!userId || !name || !email) {
+            return sendError(res, 400, false, 'User ID, name, and email are required');
+        }
+
+        // Check if email is already taken by another user
+        const _existingUsers = await userModel.getUserByEmail(email);
+        if (_existingUsers[0].length && _existingUsers[0].some(u => String(u.id) !== String(userId))) {
+            return sendResponse(res, 400, false, 'Email is already in use by another account');
+        }
+
+        await userModel.updateProfile(userId, name, email);
+
+        // Fetch updated user info
+        const _updatedUserResult = await userModel.getUser(userId);
+        const updatedUser = _updatedUserResult[0][0];
+
+        if (!updatedUser) {
+            return sendError(res, 404, false, 'User not found');
+        }
+
+        const { password, ...userWithoutPassword } = updatedUser;
+
+        return sendResponse(res, 200, true, 'Profile updated successfully', { user: userWithoutPassword });
     })
 }
 

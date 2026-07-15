@@ -11,6 +11,7 @@ authRouter.post('/login', authController.login);
 
 // For user only
 authRouter.post('/signup', authController.signup);
+authRouter.post('/update-profile', authController.updateProfile);
 // For admin only
 authRouter.post('/logout', authController.logout);
 
