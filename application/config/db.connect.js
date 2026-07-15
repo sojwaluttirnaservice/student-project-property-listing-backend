@@ -15,7 +15,7 @@ const pool = mysql.createPool(
     database: process.env.DB_DATABASE,
     // Password
     password: process.env.DB_PASSWORD,
-    // Wait for connections
+    // Wait for connection 
     waitForConnections: true,
     // Port
     port: process.env.DB_PORT,
