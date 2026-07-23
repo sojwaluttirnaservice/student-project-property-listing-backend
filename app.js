@@ -28,15 +28,8 @@ app.use(session({
   // }
 }));
 
-// app.use(cors(
+app.use(cors())
 
-
-// }
-
-// ))
-app.use(cors({ origin: ['https://api.sklandmark.com','https://sklandmark.com','https://www.sklandmark.com','https://admin.sklandmark.com'] }));
-
- 
 // app.use(cors(
 //   {
 //   //   origin: process.env.FRONTEND_URL,
